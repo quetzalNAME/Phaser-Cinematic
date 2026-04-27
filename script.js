@@ -1,6 +1,29 @@
 let logoScale = 0.45;
 let chosenScreenX = 1280;
 let chosenScreenY = 720;
+
+class QuetzalWhiteScreen extends Phaser.Scene {
+    constructor() {
+        super('quetzalWhiteScreen');
+    }
+    preload() {}
+    create() {
+        this.textObject = this.add.text(
+            570,
+            530,
+            "Press 'Space' to start scene.",
+            {fontFamily: "Gill Sans MT", fontWeight: "bold", fontSize: "50px", color: "#000000"}
+        );
+
+        this.swap = this.input.keyboard.addKey('SPACE')
+    }
+    update() {
+        if(Phaser.Input.Keyboard.JustDown(this.swap)) {
+            this.scene.start("quetzalIntro")
+        }
+    }
+}
+
 class QuetzalIntro extends Phaser.Scene {
     constructor() {
         super('quetzalIntro');
@@ -367,6 +390,14 @@ class QuetzalTitle extends Phaser.Scene {
             ease: 'Quart.easeInOut',
         });
 
+        this.tweens.add({
+            targets: this.bubbleObject,
+            angle: 360,
+            duration: 1500,
+            ease: 'Quart.easeInOut',
+            repeat: -1
+        });
+
     }
     update() {}
 }
@@ -379,7 +410,7 @@ let config = {
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
-    scene: [QuetzalIntro, QuetzalLoading, QuetzalTitle],
+    scene: [QuetzalWhiteScreen, QuetzalIntro, QuetzalLoading, QuetzalTitle],
 }
 
 let game = new Phaser.Game(config);
